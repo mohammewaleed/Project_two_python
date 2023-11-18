@@ -1,15 +1,14 @@
-import requests
-from bs4 import BeautifulSoup
-respones = requests.get("https://books.toscrape.com")
+import requests;
+from bs4 import BeautifulSoup;
+respones = requests.get("https://books.toscrape.com/")
 
+if respones.status_code == 200 :
+  soup = BeautifulSoup(respones.content, 'html.parser')
 
-soup = BeautifulSoup(respones.content, 'html.parser')
+  articles = soup.find_all('article', class_= 'product_pod')
 
-books = soup.find_all("article")
-
-for book in books :
-  title = book.h3.a["title"]
-  rating = book.p["class"][1]
-
-  print("Name of book: " + title)
-  print("Rating is: " + rating)
+  for article in articles:
+    title = article.h3.a['title']
+    print("Title of book: " + title)
+    rating = article.p["class"][1]
+    print ("Ratig: " + rating )
